@@ -69,24 +69,114 @@ ED와 대조적으로 CS에서 신호는  복조를 통해  신호 변조 및 �
       A. 탐지 에너지 레벨이 임계값을 초과하거고 호환 반송파가 감지 될때. AND
       B. 탐지 에너지 레벨이 임계값을 초과하거나 호환 반송파가 감지 될때. OR
     
-  장치가 사용할 CCA 모드는 PHY-PIB(PHY-PIB)에 PHY 속성(PyCCAMode)으로 저장된다.
+  장치가 사용할 CCA 모드는 PHY-PIB(PHY-PIB)에 PHY 속성(PyCCAMode)으로 저장됩니다. PHY-PIB는 아래 설명됩니다.
   
   
   
 ## THE PHY constants and attibutes
 
-  상수는 프레임의 최대 크기 또는 이벤트의 지속시간과 같은 특성을 정의한다.
-  프로토콜의 각 계층은 각자의 상수를 가집니다. PHY 계층은 모직 두 상수를 가집니다. 
-  aMaxPHYPacketSize의 phy 상수는 PHY SERVICE DATA UNIT (PSDU)이 127을 초과할 수 없다는 것을 나타 냅니다.
-  aTurnaoundTime의 상수는 송수신기가 송/수신 전환 할때 필요한 시간을 나타냅니다. 이 상수에 기초하여 송수긴기는  12개 미만의 기호로 전환을 완료해야 합니다.
-  
-  물리 계층과 맥 계층에서 모든 상수는 일반 접두사 a를 가집니다.
-  반면, 네트워크 계층과 응용 계층에서 상수의 접두사는 각각 nwk와 apsc 입니다. 이는 작동 중에는 바뀔 수 없습니다.
-  
-  속성은 작동 중 변할 수 있는 변수들 입니다. 
-  물리 계층의 속성은 PHY PAN 정보 베이스( PHY-PIB)에 속해 있습니다. 이 속성들은 PHY 서비스를 관리하는데 필요 합니다. 
-  PHY-PIB 특성 목록은 ~~ 가 있습니다.
+    상수는 프레임의 최대 크기 또는 이벤트의 지속시간과 같은 특성을 정의한다.
+    프로토콜의 각 계층은 각자의 상수를 가집니다. PHY 계층은 모직 두 상수를 가집니다. 
+    aMaxPHYPacketSize의 phy 상수는 PHY SERVICE DATA UNIT (PSDU)이 127을 초과할 수 없다는 것을 나타 냅니다.
+    aTurnaoundTime의 상수는 송수신기가 송/수신 전환 할때 필요한 시간을 나타냅니다. 이 상수에 기초하여 송수긴기는  12개 미만의 기호로 전환을 완료해야 합니다. 
   
   
+![image](https://user-images.githubusercontent.com/43804441/51887249-56ef2f00-23d6-11e9-9cef-e281d7405496.png)
+
   
+    물리 계층과 맥 계층에서 모든 상수는 일반 접두사 a를 가집니다.
+    반면, 네트워크 계층과 응용 계층에서 상수의 접두사는 각각 nwk와 apsc 입니다. 이는 작동 중에는 바뀔 수 없습니다.
+
+    속성은 작동 중 변할 수 있는 변수들 입니다. 
+    물리 계층의 속성은 PHY PAN 정보 베이스( PHY-PIB)에 속해 있습니다. 이 속성들은 PHY 서비스를 관리하는데 필요 합니다. 
+    PHY-PIB 속성 목록은 아래 표와 같이 있습니다.
+
+![image](https://user-images.githubusercontent.com/43804441/51887214-3c1cba80-23d6-11e9-8f7c-bfa7ada16d9f.png)
+
+    +십자 모양이 있는 속성은 읽기전용 속성입니다. 상위 계층은 오직 읽기 전용만 읽을 수 있지만 PHY계층은 변경도 가능합니다.
+    *별 모양이 있는 속성은  읽기 전용의 특별 비트를 가지고 있습니다. 
+    이러한 마크가 없는 속성들은 다음 상위 계층에 의해 읽거나 쓰일 수 있습니다. 오직 PHY 계층만이 읽기전용 비트를 바꿀 수 있습니다.
+ 
+ 
+ ## PHY SERVICES
+ 
+  물리 계층은 두 가지 타입의 서비스를 제공합니다. PHY 데이터 서비스와 PHY 관리 서비스 입니다.
   
+  PHY 데이타 서비스는 라디오 채널을 통한  PHY Protocol Data Unit (PPDU) 전송과 수신을 가능하게 합니다.
+  PHY는 Physical Layer Management Entity (PLME)라는 관리체를 포함하는데, 이는 아래 그림과 같습니다.
+  PHY 관리 기능은 PLME에 의하여 호출 될 수 있습니다. PHY 데이타 서비스는 PHY Data SAP (PD-SAP)를 통하여 접근 됩니다.
+  PHY 관리 서비스는 PLME-SAP를 통해 접근 됩니다.
+  PLME는 또한 PHY PAN 기반 정보 (PIB)를 유지합니다.
+  
+  ![image](https://user-images.githubusercontent.com/43804441/51887743-21e3dc00-23d8-11e9-93fa-5999ab9914d7.png)
+
+
+###  PHY DATA SERVICES
+
+      전송될 필요가 있는 데이터는 항상 MAC Protocol Data Unit (MPDU)로서 제공됩니다. 로컬 MAC은 전송 요청을 발생 시키고, MPDU를 제공합니다.
+      PHY는 전송을 시도하고 시도의 결과(성공 혹은 실패)를 MAC로 보고합니다. 실패 전송 시도의 이유는 다음과 같을 수 있습니다.
+      
+      1. 라디오 송수신기가 사용 불가이다.
+      2. 라디오 송수신기가 수신모드이다. 라디오는 동시에 송수신 할 수 없다.
+      3. 라디오 송수신기가 바쁜 상태이다. ( 이미 전송 중인 상태이다.)
+      
+      데이터가 라디오 송수신기에 의하여 수신될 때, PHY는 MAC에게 MPDU의 도착을 알립니다. PHY는 MAC에게 MPDU를 제공할 뿐 아니라 LQI정보도 전달합니다.
+      
+      
+![image](https://user-images.githubusercontent.com/43804441/51888077-3674a400-23d9-11e9-9640-14ccbae034f2.png)
+    
+      위 그림은 한 장치에서 다른 장치로의 응용 계층에서부터의 데이터 전송 과정을 보여줍니다. 
+      데이타는 항상 응용 계층으로부터 오지 않습니다. 예를 들어 데이터는 상위 계층에서 받지 않고 MAC 계층에서 발생할 수 있습니다. 
+      위 그림의 과정에서 데이타는 다른 직비 장비 객체 (ZIGBEE DEVICE OBJECT , ZDO) 혹은 Application Suprot sublayer, APS 어플리케이션 객체 중의 하나로 부터 제공될 수 있습니다.
+      전송 중인 장비에서 각 계층은 계층의 헤더와 푸더(가능하다면)를 데이터 유닛 DU에 추가하고 다음 아래 계층으로 보냅니다.
+      
+      각 계층의 DU는 각 계층의 이름에 의하여 정의 됩니다. 위 그림처럼 APDU, NPDU, MPDU,DDPU등으로 불립니다. 
+      
+      수신측에서 데이타는 데이터가 DU의 목적지 계층에 도달할 때까지 헤더와 푸더를 벗기고 상위 계층으로 보냅니다.
+      
+### PHY MANAGEMENT SERVICE
+
+    물리 계층 관리체 SAP ,PLME-SAP는 MLME(맥계층 관리체)와 PLME 사이의 전송을 명령하도록 이용됩니다.
+    PLME-SAP를 통해 제공되는 서비스들은 다음과 같습니다.
+    
+   #### CCA, Clear channel assessment
+         
+          MLME는 CSMA-CA가 채널의 평가를 요구할 때마다 PLME가 CCA를 수행하도록 요청합니다. 
+          CCA의 결과 값은 다음과 같을 수 있습니다.
+          
+          1. 송수신기가 사용 불가여서 CCA가 수행될 수 없다.
+          2. 채널이 휴지 상태이고 전송을 할 수 있다.
+          3. 채널 혹은 송수신기가 사용 중이다.
+              a.  채널이 사용 중이다.( 다른 장비가 주파수 채널을 사용 중이다.)
+              b.  장비가 전송을 하는 중이어서 cca 수행이 불가능하다.
+         
+         PLME 채널의 사용중과 장비의 사용 중을 구별할 수 없고 두 경우 모두 같은 BUSY 상태를 MLME에게 전송 합니다.
+    
+   #### ED, energy detection
+   
+          ED 요청은 MLME에 의하여 발생하고 PLME에 알려집니다. 만약 ED 측정이 성공적으로 완료 도니다면, 에너지 레벨은 MLME로 재보고 됩니다.
+          무선 또는 송수신기가 비활성화되면 ED 요청이 실패합니다.
+          
+   #### Enabling and disabling the radio transceiver
+ 
+        MLME는 PLME가 송수신기를 다음 3 상태 중 하나로 만들도록 요청 합니다. 
+        
+          1. 송수신기 사용불가
+          2. 송신 사용 가능
+          3. 수신 사용 가능
+        
+   #### Obtaining Information from the PHY-PIB ( PHY-PIB로 부터 정보 얻기)
+   
+        PLME는 PHY-PIB의 어떤 PHY 속성도 읽을 수 있고 그것을 MLME에 제공할 수 있습니다.
+        PHY 속성을 읽는 요청은 항상 MLME에 의하여 생성 됩니다.
+        
+   #### Setting the Value of a PHY-PIB Attribute
+   
+        읽기 전용 PHY 속석은 오직 PHY에 의하여만 변경 될 수 있습니다. 그러나 다른 모든 속성의 경우 MLME가 PLME에게 PHY-PIB 속성을 주어진 값으로 변경 하도록 요청할 수 있습니다.
+       
+   
+## THE SERVICE PRIMITIVES  서비스 준비
+
+    
+    
+    
