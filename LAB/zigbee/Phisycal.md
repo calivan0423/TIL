@@ -228,6 +228,53 @@ ED와 대조적으로 CS에서 신호는  복조를 통해  신호 변조 및 �
     확인에서 PHY는 전송이 성공여부를 MAC에게 알립니다.
     
     
+## PHY PACKET FORMAT
     
+![image](https://user-images.githubusercontent.com/43804441/51892200-85740680-23e4-11e9-9c31-0a77496d6f17.png)
     
+     PPDU 포맷은 위 그림과 같습니다. PPDU 3가지 요소로 구성됩니다. 
+     동기 헤더 Synchronization header ( SHR ) ,
+     PHY 헤더  ( PHR ),
+     그리고 PHY 페이로드 
+     
+     SHR는 수신기가 동기화 되게 하고 비트 스트림을 고정시킵니다.
+     PHR는 프레임 길이 정보를 포함합니다. 
+     PHY 페이로드는 상위 계층으로부터 제공되고 데이터 혹은 다른 장비로 전송을 위한 명령을 포함합니다.
+     
+     SHR는 한 개의 프리앰블과 한 개의 start-of-frame delimiter(SFD)로 구성됩니다.
+      수신기는 프리앰블 필드를 사용하여 칩 및 기호 동기화를 얻습니다.
+      모든 PHY의 프리앰블 필드의 비트는 ( ASK PHY는 제외하고 ) 이진 비트 입니다.
+      868MHz ASK PHY 프리앰플은 아래표의 시퀀스 0을 두번 반복하여 생성합니다.
+      
+      표 A.1
+![image](https://user-images.githubusercontent.com/43804441/51892927-b6553b00-23e6-11e9-8e7d-1f79dd30b5f9.png)   
+
+      이 프리앰블의 지속 시간은 160μs입니다. 915MHz ASK PHY에서
+      표 A.2의 시퀀스 0은 6회 반복되며 120μs가 소요됩니다.
+      
+![image](https://user-images.githubusercontent.com/43804441/51893056-1cda5900-23e7-11e9-9b34-55672f09a305.png)    
+
+      모든 PHY 옵션에서 프리앰블의 길이와 지속 시간은 아래 표와 같습니다.
+      
+      표 3.4
+![image](https://user-images.githubusercontent.com/43804441/51893106-472c1680-23e7-11e9-82fb-bfe5ef4b3b55.png)
+
+
+      SFD 필드는 SHR의 끝과 PHR의 시작을 나타냅니다. 
+      868MHz 및 915MHz ASK PHY에 대한 SFD는 각각 표 A.1과 A.2의 반전된 시퀀스 0입니다.
+      다른 모든 PHY의 경우, SFD는 표 3.5에 나와 있는 8비트 필드입니다. SFD 필드의 길이는 표 3.6 에 나와 있습니다
     
+
+![image](https://user-images.githubusercontent.com/43804441/51893213-970add80-23e7-11e9-8977-f614e4596b1f.png)
+
+![image](https://user-images.githubusercontent.com/43804441/51893229-a38f3600-23e7-11e9-8d30-2fbc2523556a.png)   
+
+      PHY 패킷의 다음 필드는 프레임 길이이며, 이는 PHY 페이로드(PSDU)의 총 옥oct 수를 지정합니다. 
+    PSDU 길이는 0 ~ 127 옥ets 값일 수 있습니다(표 3.2 , PHY 상수 참조).
+    그러나 실제로 IEEE 802.15.4-2006에 따르면 PSDU 길이는 MAC 수신 프레임의 경우 5 옥 oct이거나 다른 모든 MPD의 경우 9–127입니다. 
+    0–4 및 6–8의 프레임 길이 값은 향후 발생할 수 있는 애플리케이션용으로 예약되어 있습니다(표 3.7).
+
+
+      마지막 필드는 PHY 서비스 데이터 단위(PSDU)입니다. 
+      PSDU의 내용은 MAC에서 MAC 프레임으로 제공됩니다. IEEE 802.15.4에서 첫 번째로 전송되는 비트는 SHR의 최소 유효 비트(LSB)입니다. 
+      PHY 페이로드의 마지막 8진수에서 가장 중요한 비트(MSB)가 마지막으로 전송됩니다.
