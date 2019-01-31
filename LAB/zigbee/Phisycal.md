@@ -92,7 +92,7 @@
 
 ##  clear channel assessment
 
-  csma/cs의 첫단계에서 MAC는 PHY에게 타 장비가 채널을 사용 중이 아닌 것을 확인 받기 위하여 CLEAR CHANNEL ASSESSMENT, CCA를 할 것을 요청 합니다.
+  csma/ca의 첫단계에서 MAC는 PHY에게 타 장비가 채널을 사용 중이 아닌 것을 확인 받기 위하여 CLEAR CHANNEL ASSESSMENT, CCA를 할 것을 요청 합니다.
   CCA는 PHY 관리 서비스의 부분입니다. CCA에서 ED혹은 CS의 결과는 주파수 채널이 사용될수 있는지 없는지 판단하기 위하여 사용될 수 있습니다.
   CCA 기간은 8 주기 여야 합니다...(??)
   
