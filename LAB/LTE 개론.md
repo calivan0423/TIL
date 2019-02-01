@@ -5,6 +5,7 @@ lte네트워크의 무선망은 진화된 기지국(e-nodeB, eNB)로 구성, E-U
 LTE에서는 코어망은 패키 네트워크만 구성되며 EPC(EVOLVED PACKET CORE)라고 한다.
 
 EPC와 E-UTRAN을 포함한 것을 EPS.
+.
 
 LTE에서는 기지국 제어국이 없어 ENB간 핸드오버기능을 해결해야함으로, X2인터페이스가 추가ㄴ
 
