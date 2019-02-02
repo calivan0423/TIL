@@ -34,6 +34,7 @@
     
 ## 직비 디바이스 타입
 
+
 ### 용도에 따른 분류
 
 ![image](https://user-images.githubusercontent.com/43804441/51821741-7d9d5f00-231d-11e9-8330-60246e750932.png)
