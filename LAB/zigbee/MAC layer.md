@@ -85,7 +85,33 @@
    만약 장비가 긴 기간의 시간 동안 자체 GTS를 사용하지 않는다면, 해당 GTS는 만료될 것이고 코디네이터 다른 장치에 특정 GTS를 할당 할 수 있다.
    GTS 만료를 초래하는 비활동 주기는 항상 슈퍼프레임 길이의 두배이다. 이 정수 배의 값은 macBeaconOrder에 따른다.
    
+![image](https://user-images.githubusercontent.com/43804441/52517841-cc83b680-2c84-11e9-8204-615796489c10.png)
+
+![image](https://user-images.githubusercontent.com/43804441/52517845-e9b88500-2c84-11e9-9c3f-be2755353b41.png)
+
+  
+  예를 들어, 만약 4번의 연이은 슈퍼프레임 동안 7의 macBeaconOrder의 장비가 자체 GTS를 사용하지 않는다면, 그 GTS는 만료될 것이다.
+  
+## THE Interframe Spacing  
+  
+![image](https://user-images.githubusercontent.com/43804441/52517872-7a8f6080-2c85-11e9-9e24-f59475a9a508.png)
+
    
+  한 장비에서 다른 장비로 데이터를 전송하는 동안, 송신 장비는 수신장비가 다음 프레임이 도착하기 전에 
+  수신된 프레임을 처리할 수 있도록 연속적인 프레임전송 사이에 잠시 기다려야만 한다.
+  이는 IFS,프레임 공간이라고 알려져 있다.
+  IFS의 길이는 전송되는 프레임의 사이즈에 달려있다.
+  aMaxSIFSFramesSize (a MAC constant with default value of 18 octets)와 동일하거나 적은 사이즈의 MPDU들은 작은 프레임으로 고려된다.
+  긴 프레임은 aMaxSIFSFramesSize의 크기를 초과하는 MPDU이다.
+  
+  짧은 프레임이후의 대기 기간은 shortIFS (SIFS)라고 불리운다. SFIS의 최소 값은 macMinSIFSPeriod이다.
+  비슷하게 긴 프레임은 LongIFS(LIFS)이고 macMinLIFSPeriod의 최소 값을 가진다.  
+   macMinSIFSPeriod과 macMinLIFSPeriod은 12개 및 40개의 기호이다.
+   
+   그림 3.9는 두 가지 시나리오의 인터프레임공간을 보여준다.
+   첫 번째에서 메세지는 인정되며, 프레임 길이에 따라서 수신된 프레임과 다음 프레임 사이의 대기 시간이 SIFS or LIFS이다.
+   프레임 전송 및 수신 프레임의 수신에 따른 시간을 t(ACK)로 표시한다.
+   만약 확인이 필요하지 않는다면, 최소 인터프레임 간격은 프레임이 전송되는 순간부터 시작된다.
    
    
 
