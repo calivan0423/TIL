@@ -638,5 +638,9 @@
   nwk 명령 식별자와 명령 페이로드는 nwk 프레임 페이로드를 형성할 것이다.
   
   
+![image](https://user-images.githubusercontent.com/43804441/53318277-140b7300-3912-11e9-8cce-5cfb05c13bca.png)
+
+
+  
   
   
