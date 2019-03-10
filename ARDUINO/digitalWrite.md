@@ -39,3 +39,57 @@ void loop() {
   }
 
 }
+
+
+///////////////////////////////////////////////////////////////////////
+
+
+
+
+int ledPins[]={13,12,11};
+
+void setup() {
+   int index;
+   for(index=0;index<=2;index++){
+    pinMode(ledPins[index],OUTPUT);
+   }
+
+}
+
+void loop() {
+  oneAfterAnotherNoLoop();
+  //반복분을 사용하지 않고 led를 하나씩 키는 함수
+  oneAfterAnotherLoop();
+  //반복문을 사용하여 led를 하나씩
+
+}
+
+void  oneAfterAnotherNoLoop(){
+  //1.하나씩 켜지고 1초씩 일시정지, 거꾸로 하나씩
+
+  digitalWrite(ledPins[0],1);
+  delay(1000);
+  digitalWrite(ledPins[1],1);
+  delay(1000);
+  digitalWrite(ledPins[2],1);
+  delay(1000);
+  digitalWrite(ledPins[2],0);
+  delay(1000);
+  digitalWrite(ledPins[1],0);
+  delay(1000);
+  digitalWrite(ledPins[0],0);
+  delay(1000);
+}
+
+void oneAfterAnotherLoop(){
+  int index;
+  for(index=2;index>=0;index--){
+    digitalWrite(ledPins[index],1);
+    delay(1000);
+  }
+  for(index=0;index<=2;index++){
+    digitalWrite(ledPins[index],0);
+    delay(1000);
+  }
+}
+
